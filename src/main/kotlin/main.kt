@@ -19,14 +19,20 @@ fun main() {
     println(contaCarla.saldo)
 
     println("Depositando na conta da Carla:")
-    deposita(contaCarla, 65.0)
+    contaCarla.deposita(65.0)
     println(contaCarla.saldo)
+
+    println("Saque de 10 reais da conta:")
+    contaCarla.sacar(10.0)
+    println(contaCarla.saldo)
+
+    println("Saque de 1000 reias (Não tem na conta)")
+    contaCarla.sacar(1000.0)
+    println(contaCarla.saldo)
+
+
 }
 
-fun deposita(conta: Conta, valor: Double){
-    conta.saldo += valor
-
-}
 
 //Primeira letra da CLASSE é mauscula!
 //Classe é um molde, voce coloca ele e preenche com algo, um molde que pode ser usado varias vzs.
@@ -34,6 +40,20 @@ class Conta {
     var titular = ""
     var numero = 0
     var saldo = 100.0
+
+    fun deposita(valor: Double){
+        this.saldo += valor  // O THIS sibstitui o CONTA, pois o THIS fala "NESSE OBJETO QUE ESTOU AGORA". (Olhar Commit e comparar)
+}
+
+    //A FUN deposita veio para dentro da classe pois: As classes são as responsáveis por modificar seus atributos.
+    // qualquer comportamento que ajuste o estado da classe (modifique os atributos), deve ser implementado pela própria classe.
+    fun sacar(valor: Double){
+        if(saldo > valor){
+            this.saldo -= valor  // Mais uma vez o THIS fazedno referencia ao OBJETO em que a FUN está no momento.
+        }else{
+            println("Infelizmente o valor digitado não está disponivel no sue saldo.")
+        }
+    }
 }
 
 fun testaLacos(){
