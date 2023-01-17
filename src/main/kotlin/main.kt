@@ -30,6 +30,15 @@ fun main() {
     contaCarla.sacar(1000.0)
     println(contaCarla.saldo)
 
+    println("Valores em saldo das contas Leo e Carla")
+    println(contaLeo.saldo)
+    println(contaCarla.saldo)
+
+    println("Transferência entre contas:")
+    contaCarla.tranferencia(100.00, contaLeo)
+    println(contaCarla.saldo)
+    println(contaLeo.saldo)
+
 
 }
 
@@ -41,24 +50,32 @@ class Conta {
     var numero = 0
     var saldo = 100.0
 
-    fun deposita(valor: Double){
+    fun deposita(valor: Double) {
         this.saldo += valor  // O THIS sibstitui o CONTA, pois o THIS fala "NESSE OBJETO QUE ESTOU AGORA". (Olhar Commit e comparar)
-}
+    }
 
     //A FUN deposita veio para dentro da classe pois: As classes são as responsáveis por modificar seus atributos.
     // qualquer comportamento que ajuste o estado da classe (modifique os atributos), deve ser implementado pela própria classe.
-    fun sacar(valor: Double){
-        if(saldo > valor){
+    fun sacar(valor: Double) {
+        if (saldo > valor) {
             this.saldo -= valor  // Mais uma vez o THIS fazedno referencia ao OBJETO em que a FUN está no momento.
-        }else{
+        } else {
             println("Infelizmente o valor digitado não está disponivel no sue saldo.")
+        }
+    }
+    fun tranferencia (valor :Double, destino : Conta) {
+        if (saldo >= valor){
+            saldo -= valor
+            destino.saldo += valor
+        }else{
+            println("Não é possivel realizar a transferencia! Saldo insuficiente.")
         }
     }
 }
 
-fun testaLacos(){
+fun testaLacos() {
     var i = 0
-    while (i < 5){ //Enquanto i for menor que 5 execute esse comando:
+    while (i < 5) { //Enquanto i for menor que 5 execute esse comando:
         val titular: String = "Leo $i"
         val numeroConta: Int = 1000 + i
         var saldo = 0.0 + i//Double
