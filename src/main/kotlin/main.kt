@@ -6,38 +6,38 @@ fun main() {
 
     val contaCarla = Conta()
     contaCarla.titular = "Carla"
-    contaCarla.saldo = 100.0
+    contaCarla.setSaldo(100.0)
     var contaLiza = contaCarla
     contaLiza.titular = "Liza"
-    contaLiza.saldo = 854.0
+    contaLiza.setSaldo(854.0)
 
     println(contaCarla)
     println(contaLiza)  //Vai dar o mesmo valor HEX pois uma está ligada a outra, dando o mesmo resultado.
-    println(contaLiza.saldo)
+    println(contaLiza.getSaldo())
     println(contaLiza.titular)
     println(contaCarla.titular)
-    println(contaCarla.saldo)
+    println(contaCarla.getSaldo())
 
     println("Depositando na conta da Carla:")
     contaCarla.deposita(65.0)
-    println(contaCarla.saldo)
+    println(contaCarla.getSaldo())
 
     println("Saque de 10 reais da conta:")
     contaCarla.sacar(10.0)
-    println(contaCarla.saldo)
+    println(contaCarla.getSaldo())
 
     println("Saque de 1000 reias (Não tem na conta)")
     contaCarla.sacar(1000.0)
-    println(contaCarla.saldo)
+    println(contaCarla.getSaldo())
 
     println("Valores em saldo das contas Leo e Carla")
-    println(contaLeo.saldo)
-    println(contaCarla.saldo)
+    println(contaLeo.getSaldo())
+    println(contaCarla.getSaldo())
 
     println("Transferência entre contas:")
     contaCarla.tranferencia(100.00, contaLeo)
-    println(contaCarla.saldo)
-    println(contaLeo.saldo)
+    println(contaCarla.getSaldo())
+    println(contaLeo.getSaldo())
 
 
 }
@@ -48,7 +48,7 @@ fun main() {
 class Conta {
     var titular = ""
     var numero = 0
-    var saldo = 100.0
+    private var saldo = 100.0 //Modificador de acesso, o padrão é Public
 
     fun deposita(valor: Double) {
         this.saldo += valor  // O THIS sibstitui o CONTA, pois o THIS fala "NESSE OBJETO QUE ESTOU AGORA". (Olhar Commit e comparar)
@@ -66,9 +66,20 @@ class Conta {
     fun tranferencia (valor :Double, destino : Conta) {
         if (saldo >= valor){
             saldo -= valor
-            destino.saldo += valor
+            destino.deposita(valor)
         }else{
             println("Não é possivel realizar a transferencia! Saldo insuficiente.")
+        }
+    }
+
+    // Isso é encapsulamento, deixamos a variavel protegida e criamos uma copia segura dela para usar.
+    fun getSaldo(): Double{
+        return saldo
+    }
+
+    fun setSaldo(valor: Double){
+        if(valor > 0){
+            saldo = valor
         }
     }
 }
