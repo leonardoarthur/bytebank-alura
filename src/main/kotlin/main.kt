@@ -1,12 +1,10 @@
 fun main() {
     println("Bem vindo ao Bytebank")
-    val contaLeo = Conta()
-    contaLeo.titular = " Leo"
+    val contaLeo = Conta("Leo", 10.0)
 
 
-    val contaCarla = Conta()
-    contaCarla.titular = "Carla"
-    contaCarla.deposita(100.0)
+
+    val contaCarla = Conta("Carla", 12.0)
     var contaLiza = contaCarla
     contaLiza.titular = "Liza"
     contaLiza.deposita(854.0)
@@ -45,11 +43,19 @@ fun main() {
 
 //Primeira letra da CLASSE é maiuscula!
 //Classe é um molde, voce coloca ele e preenche com algo, um molde que pode ser usado varias vzs.
-class Conta {
-    var titular = ""
-    var numero = 0
+class Conta(titular: String, numero: Double) {
+    var titular = titular
+    var numero = numero
     var saldo = 100.0 //Modificador de acesso, o padrão é Public
         private set // Properties, mais idiomatico ao Kotlin.
+
+
+    //Como seria com um construtor "secundario", mas podemos usar um primario na propria classe.
+//    constructor(titular: String, numero: Double){
+//        this.titular = titular
+//        this.numero = numero
+//
+//    }
 
     fun deposita(valor: Double) {
         if(valor > 0){
