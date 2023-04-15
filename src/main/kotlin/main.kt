@@ -6,55 +6,59 @@ fun main() {
 
     val contaCarla = Conta()
     contaCarla.titular = "Carla"
-    contaCarla.setSaldo(100.0)
+    contaCarla.deposita(100.0)
     var contaLiza = contaCarla
     contaLiza.titular = "Liza"
-    contaLiza.setSaldo(854.0)
+    contaLiza.deposita(854.0)
 
     println(contaCarla)
     println(contaLiza)  //Vai dar o mesmo valor HEX pois uma está ligada a outra, dando o mesmo resultado.
-    println(contaLiza.getSaldo())
+    println(contaLiza.saldo)
     println(contaLiza.titular)
     println(contaCarla.titular)
-    println(contaCarla.getSaldo())
+    println(contaCarla.saldo)
 
     println("Depositando na conta da Carla:")
     contaCarla.deposita(65.0)
-    println(contaCarla.getSaldo())
+    println(contaCarla.saldo)
 
     println("Saque de 10 reais da conta:")
     contaCarla.sacar(10.0)
-    println(contaCarla.getSaldo())
+    println(contaCarla.saldo)
 
     println("Saque de 1000 reias (Não tem na conta)")
     contaCarla.sacar(1000.0)
-    println(contaCarla.getSaldo())
+    println(contaCarla.saldo)
 
     println("Valores em saldo das contas Leo e Carla")
-    println(contaLeo.getSaldo())
-    println(contaCarla.getSaldo())
+    println(contaLeo.saldo)
+    println(contaCarla.saldo)
 
     println("Transferência entre contas:")
     contaCarla.tranferencia(100.00, contaLeo)
-    println(contaCarla.getSaldo())
-    println(contaLeo.getSaldo())
+    println(contaCarla.saldo)
+    println(contaLeo.saldo)
 
 
 }
 
 
-//Primeira letra da CLASSE é mauscula!
+//Primeira letra da CLASSE é maiuscula!
 //Classe é um molde, voce coloca ele e preenche com algo, um molde que pode ser usado varias vzs.
 class Conta {
     var titular = ""
     var numero = 0
-    private var saldo = 100.0 //Modificador de acesso, o padrão é Public
+    var saldo = 100.0 //Modificador de acesso, o padrão é Public
+        private set // Properties, mais idiomatico ao Kotlin.
 
     fun deposita(valor: Double) {
-        this.saldo += valor  // O THIS sibstitui o CONTA, pois o THIS fala "NESSE OBJETO QUE ESTOU AGORA". (Olhar Commit e comparar)
+        if(valor > 0){
+            this.saldo += valor  // O THIS subistitui o CONTA, pois o THIS fala "NESSE OBJETO QUE ESTOU AGORA".
+        }
+
     }
 
-    //A FUN deposita veio para dentro da classe pois: As classes são as responsáveis por modificar seus atributos.
+    //A FUN deposita foi para dentro da classe pois: As classes são as responsáveis por modificar seus atributos.
     // qualquer comportamento que ajuste o estado da classe (modifique os atributos), deve ser implementado pela própria classe.
     fun sacar(valor: Double) {
         if (saldo > valor) {
@@ -73,16 +77,16 @@ class Conta {
     }
 
     // Isso é encapsulamento, deixamos a variavel protegida e criamos uma copia segura dela para usar.
-    fun getSaldo(): Double{
-        return saldo
-    }
-
-    fun setSaldo(valor: Double){
-        if(valor > 0){
-            saldo = valor
-        }
-    }
-}
+//    fun getSaldo(): Double{
+//        return saldo
+//    }
+//
+//    fun setSaldo(valor: Double){
+//        if(valor > 0){
+//            saldo = valor
+//        }
+//    }
+//}
 
 fun testaLacos() {
     var i = 0
@@ -120,4 +124,5 @@ fun testaCondicoes(saldo: Double) {
             println("Seu saldo é positivo, você precisa gastar. Conheça nosso cartão de crédito.")
         }
     }
+ }
 }
