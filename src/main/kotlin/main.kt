@@ -1,10 +1,12 @@
 fun main() {
     println("Bem vindo ao Bytebank")
-    val contaLeo = Conta("Leo", 10.0)
+    val contaLeo = Conta(titular = "Leo", numero = 10.0)
 
 
-
-    val contaCarla = Conta("Carla", 12.0)
+    val contaCarla = Conta(
+        numero = 12.0,
+        titular = "Carla"
+    ) //Labels são esses "parametros", ao invés de deixer a IDE colocar você pode colocar na sua ordem
     var contaLiza = contaCarla
     contaLiza.titular = "Liza"
     contaLiza.deposita(854.0)
@@ -24,7 +26,7 @@ fun main() {
     contaCarla.sacar(10.0)
     println(contaCarla.saldo)
 
-    println("Saque de 1000 reias (Não tem na conta)")
+    println("Saque de 1000 reais (Não tem na conta)")
     contaCarla.sacar(1000.0)
     println(contaCarla.saldo)
 
@@ -43,9 +45,7 @@ fun main() {
 
 //Primeira letra da CLASSE é maiuscula!
 //Classe é um molde, voce coloca ele e preenche com algo, um molde que pode ser usado varias vzs.
-class Conta(titular: String, numero: Double) {
-    var titular = titular
-    var numero = numero
+class Conta(var titular: String, val numero: Double, opcional: Int = 0) {
     var saldo = 100.0 //Modificador de acesso, o padrão é Public
         private set // Properties, mais idiomatico ao Kotlin.
 
@@ -58,7 +58,7 @@ class Conta(titular: String, numero: Double) {
 //    }
 
     fun deposita(valor: Double) {
-        if(valor > 0){
+        if (valor > 0) {
             this.saldo += valor  // O THIS subistitui o CONTA, pois o THIS fala "NESSE OBJETO QUE ESTOU AGORA".
         }
 
@@ -73,11 +73,12 @@ class Conta(titular: String, numero: Double) {
             println("Infelizmente o valor digitado não está disponivel no sue saldo.")
         }
     }
-    fun tranferencia (valor :Double, destino : Conta) {
-        if (saldo >= valor){
+
+    fun tranferencia(valor: Double, destino: Conta) {
+        if (saldo >= valor) {
             saldo -= valor
             destino.deposita(valor)
-        }else{
+        } else {
             println("Não é possivel realizar a transferencia! Saldo insuficiente.")
         }
     }
@@ -94,41 +95,41 @@ class Conta(titular: String, numero: Double) {
 //    }
 //}
 
-fun testaLacos() {
-    var i = 0
-    while (i < 5) { //Enquanto i for menor que 5 execute esse comando:
-        val titular: String = "Leo $i"
-        val numeroConta: Int = 1000 + i
-        var saldo = 0.0 + i//Double
+    fun testaLacos() {
+        var i = 0
+        while (i < 5) { //Enquanto i for menor que 5 execute esse comando:
+            val titular: String = "Leo $i"
+            val numeroConta: Int = 1000 + i
+            var saldo = 0.0 + i//Double
 
-        println("titular $titular")
-        println("número da conta: $numeroConta")
-        println("saldo da conta: $saldo")
-        i++
-    }
-}
-
-fun testaCondicoes(saldo: Double) {
-    if (saldo < 0) {
-        println("Você está devendo.")
-    } else if (saldo == 0.0) {
-        println("Saldo zerado!")
-    } else {
-        println("Parabéns! Seu saldo está positivo!")
-    }
-
-    when {
-        saldo < 0 -> {
-            println("Você está devendo, veja nossas opções de emprestimo para sair dessa situação")
-        }
-
-        saldo == 0.0 -> {
-            println("Saldo zerado! não pode comprar mais nada por hoje.")
-        }
-
-        else -> {
-            println("Seu saldo é positivo, você precisa gastar. Conheça nosso cartão de crédito.")
+            println("titular $titular")
+            println("número da conta: $numeroConta")
+            println("saldo da conta: $saldo")
+            i++
         }
     }
- }
+
+    fun testaCondicoes(saldo: Double) {
+        if (saldo < 0) {
+            println("Você está devendo.")
+        } else if (saldo == 0.0) {
+            println("Saldo zerado!")
+        } else {
+            println("Parabéns! Seu saldo está positivo!")
+        }
+
+        when {
+            saldo < 0 -> {
+                println("Você está devendo, veja nossas opções de emprestimo para sair dessa situação")
+            }
+
+            saldo == 0.0 -> {
+                println("Saldo zerado! não pode comprar mais nada por hoje.")
+            }
+
+            else -> {
+                println("Seu saldo é positivo, você precisa gastar. Conheça nosso cartão de crédito.")
+            }
+        }
+    }
 }
